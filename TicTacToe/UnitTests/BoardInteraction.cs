@@ -107,5 +107,42 @@ namespace UnitTests
                     ex.Message);
             }
         }
+
+        [TestCase('X', 0)]
+        [TestCase('X', 1)]
+        [TestCase('X', 2)]
+        [TestCase('X', 3)]
+        [TestCase('X', 4)]
+        [TestCase('X', 5)]
+        [TestCase('X', 6)]
+        [TestCase('X', 7)]
+        [TestCase('X', 8)]
+        [TestCase('O', 0)]
+        [TestCase('O', 1)]
+        [TestCase('O', 2)]
+        [TestCase('O', 3)]
+        [TestCase('O', 4)]
+        [TestCase('O', 5)]
+        [TestCase('O', 6)]
+        [TestCase('O', 7)]
+        [TestCase('O', 8)]
+        public void PlaceTokenInOccupiedIndex(char token, int index)
+        {
+            _board.PlaceToken(token, index);
+
+            Assert.Throws<ArgumentException>(
+                () => _board.PlaceToken(token, index));
+
+            try
+            {
+                _board.PlaceToken(token, index);
+            }
+            catch (ArgumentException ex)
+            {
+                Assert.AreEqual(
+                    "Token already placed at this position.",
+                    ex.Message);
+            }
+        }
     }
 }

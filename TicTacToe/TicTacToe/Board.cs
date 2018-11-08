@@ -12,12 +12,14 @@ namespace TicTacToe
 
         public char[] ValidTokens => new char[] { 'X', 'O' };
 
+        private char _emptyCell = ' ';
+
         /// <summary>
         /// Initialise a new instance of the <see cref="Board"/> class.
         /// </summary>
         public Board()
         {
-            State = new char[] { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' };
+            State = Enumerable.Repeat(_emptyCell, 9).ToArray();
         }
 
         /// <summary>
@@ -31,13 +33,29 @@ namespace TicTacToe
         /// </exception>
         public void PlaceToken(char token, int index)
         {
+            CheckIndex(index);
+            CheckToken(token);
+
+            State[index] = token;
+        }
+
+        private void CheckIndex(int index)
+        {
             if (index < 0 || index > State.Length - 1)
             {
                 var message =
                     $"Provided index must be between 0 and {State.Length - 1}.";
                 throw new ArgumentOutOfRangeException(nameof(index), message);
             }
+            else if (State[index] != _emptyCell)
+            {
+                var message = "Token already placed at this position.";
+                throw new ArgumentException(message);
+            }
+        }
 
+        private void CheckToken(char token)
+        {
             if (!ValidTokens.Contains(token))
             {
                 var messageBuilder = new StringBuilder();
@@ -53,8 +71,6 @@ namespace TicTacToe
 
                 throw new ArgumentException(messageBuilder.ToString());
             }
-
-            State[index] = token;
         }
     }
 }
