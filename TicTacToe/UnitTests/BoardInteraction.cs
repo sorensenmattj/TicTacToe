@@ -60,16 +60,18 @@ namespace UnitTests
             }
         }
 
-        [TestCase(-1)]
-        [TestCase(9)]
-        public void PlaceTokenAtInvalidIndex(int invalidIndex)
+        [TestCase('X', -1)]
+        [TestCase('X', 9)]
+        [TestCase('O', -1)]
+        [TestCase('O', 9)]
+        public void PlaceTokenAtInvalidIndex(char token, int invalidIndex)
         {
             Assert.Throws<ArgumentOutOfRangeException>(
-                () => _board.PlaceToken('X', invalidIndex));
+                () => _board.PlaceToken(token, invalidIndex));
 
             try
             {
-                _board.PlaceToken('X', invalidIndex);
+                _board.PlaceToken(token, invalidIndex);
             }
             catch (ArgumentOutOfRangeException ex)
             {
