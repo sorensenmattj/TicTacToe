@@ -7,11 +7,11 @@ namespace TicTacToe
 {
     public class Board
     {
-        public char[] State { get; set; }
+        public char[] State { get; private set; }
 
-        public char[] ValidTokens => new char[] { 'X', 'O' };
+        public readonly char[] ValidTokens = { 'X', 'O' };
 
-        private char _emptyCell = ' ';
+        private const char _emptyCell = ' ';
 
         private readonly Dictionary<string, int> _coordIndexMap;
 
