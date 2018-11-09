@@ -66,12 +66,14 @@ namespace UnitTests
         [TestCase('O', 9)]
         public void PlaceTokenAtInvalidIndex(char token, int invalidIndex)
         {
-            Assert.Throws<ArgumentOutOfRangeException>(
-                () => _board.PlaceToken(token, invalidIndex));
+            void TryInvalidIndex() => 
+                _board.PlaceToken(token, invalidIndex);
+           
+            Assert.Throws<ArgumentOutOfRangeException>(TryInvalidIndex);
 
             try
             {
-                _board.PlaceToken(token, invalidIndex);
+                TryInvalidIndex();
             }
             catch (ArgumentOutOfRangeException ex)
             {
@@ -95,12 +97,13 @@ namespace UnitTests
         [TestCase('Z')]
         public void PlaceInvalidToken(char invalidToken)
         {
-            Assert.Throws<ArgumentException>(
-                () => _board.PlaceToken(invalidToken, 0));
+            void TryInvalidToken() => _board.PlaceToken(invalidToken, 0);
+
+            Assert.Throws<ArgumentException>(TryInvalidToken);
 
             try
             {
-                _board.PlaceToken(invalidToken, 0);
+                TryInvalidToken();
             }
             catch (ArgumentException ex)
             {
@@ -130,14 +133,15 @@ namespace UnitTests
         [TestCase('O', 8)]
         public void PlaceTokenInOccupiedIndex(char token, int index)
         {
-            _board.PlaceToken(token, index);
+            void TryPlaceToken() => _board.PlaceToken(token, index);
 
-            Assert.Throws<ArgumentException>(
-                () => _board.PlaceToken(token, index));
+            TryPlaceToken();
+
+            Assert.Throws<ArgumentException>(TryPlaceToken);
 
             try
             {
-                _board.PlaceToken(token, index);
+                TryPlaceToken();
             }
             catch (ArgumentException ex)
             {
