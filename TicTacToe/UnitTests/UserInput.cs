@@ -44,14 +44,15 @@ namespace UnitTests
                 "Coordinates returned do not match expected coordinates.");
         }
 
-        [TestCase]
-        public void PromptUserForCoordinates()
+        [TestCase("1\n1")]
+        [TestCase("1\n2")]
+        public void PromptUserForCoordinates(string coordInput)
         {
             var expectedOutput = "x-coord: y-coord: ";
 
             var actualOutput = new StringBuilder();
             var textWriter = new StringWriter(actualOutput);
-            var textReader = new StringReader($"1\n1");
+            var textReader = new StringReader(coordInput);
 
             _engine.GetCoordinates(textWriter, textReader);
 
@@ -78,6 +79,33 @@ namespace UnitTests
                 expectedIndex,
                 actualIndex,
                 "Calculated index does not match expected index.");
+        }
+
+        [TestCase("")]
+        [TestCase("1\n4")]
+        [TestCase("a")]
+        [TestCase("b\nc")]
+        [TestCase("B\nD\n3")]
+        [TestCase("0\n0\n0")]
+        public void TryGetIndexFromInvalidCoordinates(string invalidCoords)
+        {
+            void TryInvalidCoordinates() =>
+                _board.GetIndexFromCoords(invalidCoords);
+
+            Assert.Throws<ArgumentException>(TryInvalidCoordinates);
+
+            try
+            {
+                TryInvalidCoordinates();
+            }
+            catch (ArgumentException ex)
+            {
+                var actualMessage = ex.Message;
+                Assert.AreEqual(
+                    "Provided coordinates are invalid.",
+                    actualMessage,
+                    "Actual exception message does not match expected.");
+            }
         }
     }
 }

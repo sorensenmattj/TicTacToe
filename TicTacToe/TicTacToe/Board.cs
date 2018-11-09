@@ -101,7 +101,15 @@ namespace TicTacToe
         /// </summary>
         public int GetIndexFromCoords(string coords)
         {
-            return _coordIndexMap[coords];
+            try
+            {
+                return _coordIndexMap[coords];
+            }
+            catch (KeyNotFoundException)
+            {
+                var message = "Provided coordinates are invalid.";
+                throw new ArgumentException(message);
+            }
         }
     }
 }
