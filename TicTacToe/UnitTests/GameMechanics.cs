@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Text;
 using NUnit.Framework;
 using TicTacToe;
 
@@ -9,6 +11,7 @@ namespace UnitTests
     {
         private Engine _engine;
         private Board _board;
+        private Display _display;
 
         [SetUp]
         public void SetUp()
@@ -118,6 +121,36 @@ namespace UnitTests
             Assert.IsTrue(
                 actualHasWon,
                 "Board returned false for win when win expected.");
+        }
+
+        [TestCase]
+        public void PrintBoard()
+        {
+            var outputBuilder = new StringBuilder();
+            var writer = new StringWriter(outputBuilder);
+
+            _display = new Display(writer, _board.NumberOfColumns);
+
+            _display.Show(_board.State);
+
+            var expectedBuilder = new StringBuilder();
+            expectedBuilder.AppendLine("   |   |   ");
+            expectedBuilder.AppendLine("   |   |   ");
+            expectedBuilder.AppendLine("   |   |   ");
+            expectedBuilder.AppendLine("--- --- ---");
+            expectedBuilder.AppendLine("   |   |   ");
+            expectedBuilder.AppendLine("   |   |   ");
+            expectedBuilder.AppendLine("   |   |   ");
+            expectedBuilder.AppendLine("--- --- ---");
+            expectedBuilder.AppendLine("   |   |   ");
+            expectedBuilder.AppendLine("   |   |   ");
+            expectedBuilder.AppendLine("   |   |   ");
+            expectedBuilder.AppendLine();
+
+            Assert.AreEqual(
+                expectedBuilder.ToString(),
+                outputBuilder.ToString(),
+                "Actual showing of board does not match expected showing.");
         }
     }
 }

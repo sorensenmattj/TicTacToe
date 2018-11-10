@@ -48,7 +48,7 @@ namespace UnitTests
         [TestCase("1\n2")]
         public void PromptUserForCoordinates(string coordInput)
         {
-            var expectedOutput = "x-coord: y-coord: ";
+            var expectedOutput = $"x-coord: y-coord: {Environment.NewLine}";
 
             var actualOutput = new StringBuilder();
             var textWriter = new StringWriter(actualOutput);

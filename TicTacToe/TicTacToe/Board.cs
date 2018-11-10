@@ -15,6 +15,8 @@ namespace TicTacToe
 
         private readonly Dictionary<string, int> _coordIndexMap;
 
+        public int NumberOfColumns => 3;
+
         /// <summary>
         /// Initialise a new instance of the <see cref="Board"/> class.
         /// </summary>
@@ -99,6 +101,7 @@ namespace TicTacToe
         /// <summary>
         /// Get the index corresponding to the provided coordinates.
         /// </summary>
+        /// <exception cref="ArgumentException">Thrown if invalid coordinates provided.</exception>
         public int GetIndexFromCoords(string coords)
         {
             try
