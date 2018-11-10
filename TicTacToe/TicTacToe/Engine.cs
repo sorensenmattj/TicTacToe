@@ -40,6 +40,7 @@ namespace TicTacToe
 
                 while (true)
                 {
+                    writer.WriteLine($"{CurrentToken}'s turn.");
                     var coords = GetCoordinates(writer, reader);
 
                     try
