@@ -87,6 +87,7 @@ namespace UnitTests
         [TestCase("b\nc")]
         [TestCase("B\nD\n3")]
         [TestCase("0\n0\n0")]
+        [TestCase("1\n0\n1")]
         public void TryGetIndexFromInvalidCoordinates(string invalidCoords)
         {
             void TryInvalidCoordinates() =>
