@@ -9,6 +9,20 @@ namespace TicTacToe
 {
     public class Engine
     {
+        private readonly Board _board;
+
+        public char CurrentToken => _board.ValidTokens[TurnNumber % 2];
+
+        public int TurnNumber { get; set; }
+
+        /// <summary>
+        /// Initialise a new instance of the <see cref="Engine"/> class.
+        /// </summary>
+        public Engine()
+        {
+            _board = new Board();
+        }
+        
         /// <summary>
         /// Get the coordinates from the user.
         /// </summary>
