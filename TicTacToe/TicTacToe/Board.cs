@@ -111,5 +111,102 @@ namespace TicTacToe
                 throw new ArgumentException(message);
             }
         }
+
+        /// <summary>
+        /// Checks if the player has won.
+        /// </summary>
+        public bool HasPlayerWon(char token)
+        {
+            return IsHorizontalWin(token) || IsVerticalWin(token) || IsDiagonalWin(token);
+        }
+
+        /// <summary>
+        /// Checks if there is a win horizontally.
+        /// </summary>
+        private bool IsHorizontalWin(char token)
+        {
+            var rowSets = new List<int[]>
+            {
+                new int[] { 0, 1, 2 },
+                new int[] { 3, 4, 5 },
+                new int[] { 6, 7, 8 }
+            };
+
+            return IsFullMatchInLineSet(rowSets, token);
+        }
+
+        /// <summary>
+        /// Checks if there is a win vertically.
+        /// </summary>
+        private bool IsVerticalWin(char token)
+        {
+            var columnSets = new List<int[]>
+            {
+                new int[] { 0, 3, 6 },
+                new int[] { 1, 4, 7 },
+                new int[] { 2, 5, 8 }
+            };
+
+            return IsFullMatchInLineSet(columnSets, token);
+        }
+
+        /// <summary>
+        /// Checks if there is a win diagonally.
+        /// </summary>
+        private bool IsDiagonalWin(char token)
+        {
+            var diagonalSets = new List<int[]>
+            {
+                new int[] { 0, 4, 8 },
+                new int[] { 2, 4, 6 },
+            };
+
+            return IsFullMatchInLineSet(diagonalSets, token);
+        }
+
+        /// <summary>
+        /// Checks if any lines in the set have a full match to the token.
+        /// </summary>
+        private bool IsFullMatchInLineSet(List<int[]> lineSets, char token)
+        {
+            foreach (var line in lineSets)
+            {
+                if (IsAllMatchInALine(line, token))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Checks if all elements in the line match the token.
+        /// </summary>
+        private bool IsAllMatchInALine(int[] line, char token)
+        {
+            var countOfMatches = 0;
+
+            foreach (var index in line)
+            {
+                if (State[index].Equals(_emptyCell))
+                {
+                    break;
+                }
+                else if (!State[index].Equals(token))
+                {
+                    break;
+                }
+
+                countOfMatches++;
+            }
+
+            if (countOfMatches == line.Length)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }
